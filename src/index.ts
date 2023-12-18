@@ -1,4 +1,4 @@
-import "./style.scss"
+import "./style.css"
 
 async function getUserIP() {
   try {

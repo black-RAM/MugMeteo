@@ -4,8 +4,6 @@
     "eslint": "^8.56.0",
     "gh-pages": "^6.1.0",
     "http-server": "^14.1.1",
-    "sass": "^1.69.5",
-    "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
