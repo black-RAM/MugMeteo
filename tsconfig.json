@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "target": "es2017",
+    "module": "es2022",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "moduleResolution": "Node",
+  }
+}
