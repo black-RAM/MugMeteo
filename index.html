@@ -11,6 +11,36 @@
     <title>MugMétéo</title>
   </head>
   <body>
+    <nav
+      class="p-8 flex justify-between flex-wrap gap-10 w-screen bg-emerald-400 text-slate-950 dark:bg-slate-800 dark:text-zinc-100"
+    >
+      <hgroup class="flex-grow justify-center flex gap-2">
+        <img src="./assets/coffee-cup.png" alt="logo" class="h-12" />
+        <h1 class="text-5xl">MugMétéo</h1>
+      </hgroup>
+      <div
+        class="flex justify-center md:justify-end flex-grow min-w-min gap-x-10"
+      >
+        <form
+          id="search-bar"
+          action="#"
+          class="px-4 py-2 flex-grow max-w-sm flex gap-2 rounded-lg bg-zinc-100 dark:text-slate-900"
+        >
+          <input
+            type="search"
+            placeholder="Type in a place"
+            title="Type in a place"
+            class="bg-inherit flex-grow"
+          />
+          <button type="submit" title="Search">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+        <button type="button" title="toggle light/dark mode" id="toggle">
+          <i class="bi bi-sun text-4xl" id="toggle-icon"></i>
+        </button>
+      </div>
+    </nav>
     <script src="main.js"></script>
   </body>
 </html>
