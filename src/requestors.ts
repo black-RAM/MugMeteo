@@ -1,3 +1,5 @@
+import parse from "./view"
+
 async function getUserIP() {
   try {
     const response = await fetch('https://ipinfo.io/json')
@@ -14,10 +16,9 @@ async function getWeather(area: string) {
   try{
     const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=6cbf53650ce94daf8e3154314231712&q=${area}&aqi=yes`)
     const data:object = await response.json()
-    return data
+    parse(data)
   } catch(error) {
     console.error('Error fetching weather data:\n', error)
-    return null
   }
 }
 
