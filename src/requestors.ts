@@ -15,7 +15,7 @@ async function getUserIP() {
 async function getWeather(area: string) {
   try{
     const response = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=6cbf53650ce94daf8e3154314231712&q=${area}&days=3`,
+      `https://api.weatherapi.com/v1/forecast.json?key=6cbf53650ce94daf8e3154314231712&q=${area}&days=10`,
       { 'mode': "cors"}
       )
     const data: WeatherApiResponse = await response.json()
@@ -28,15 +28,14 @@ async function getWeather(area: string) {
 interface WeatherApiResponse{
   location: Location;
   current: Current;
-  forecast: object;
+  forecast: {
+    forecastday: DailyForecast[]
+  };
 }
 
 interface Current {
   temp_c: number;
-  condition: {
-    text: string;
-    icon: string;
-  };
+  condition: Condition;
   wind_kph: number;
   humidity: number;
   cloud: number;
@@ -51,6 +50,35 @@ interface Location {
   localtime: string;
   localtime_epoch: number;
   tz_id: string;
+}
+
+interface DailyForecast {
+  date: string;
+  day: DayOverview;
+  condition: Condition;
+  hour: HourlyForecast[];
+}
+
+interface DayOverview {
+  avgtemp_c: number;
+  avghumidity: number;
+  daily_chance_of_rain: number;
+}
+
+
+interface HourlyForecast {
+  time: string;
+  temp_c: number;
+  wind_kph: number;
+  humidity: number;
+  cloud: number;
+  precip_mm: number;
+  uv: number;
+}
+
+interface Condition {
+  text: string;
+  icon: string;
 }
 
 export {getUserIP, getWeather, WeatherApiResponse}

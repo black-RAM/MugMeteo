@@ -5,6 +5,10 @@
 /* Icons */
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
+main {
+  grid-template-rows: 10vh 10vh 60px max-content 1fr;
+}
+
 .temperature-text::after {
   position: absolute;
   top: 0px;
