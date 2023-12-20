@@ -3,23 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="shortcut icon"
-      href="assets/coffee-cup.png"
-      type="image/x-icon"
-    />
-    <title>MugMétéo</title>
+    <link rel="shortcut icon" href="assets/storm.png" type="image/x-icon" />
+    <title>StormNet</title>
   </head>
-  <body>
+  <body class="font-mono min-h-screen flex flex-col">
     <nav
-      class="p-8 flex justify-between flex-wrap gap-10 w-screen bg-emerald-400 text-slate-950 dark:bg-slate-800 dark:text-zinc-100"
+      class="p-8 flex justify-between flex-wrap gap-10 w-screen bg-slate-400 text-slate-950 dark:bg-slate-900 dark:text-zinc-100"
     >
       <hgroup class="flex-grow justify-center flex gap-2">
-        <img src="./assets/coffee-cup.png" alt="logo" class="h-12" />
-        <h1 class="text-5xl">MugMétéo</h1>
+        <img src="./assets/storm.png" alt="logo" class="h-12" />
+        <h1 class="text-5xl">StormNet</h1>
       </hgroup>
       <div
-        class="flex justify-center md:justify-end flex-grow min-w-min gap-x-10"
+        class="flex justify-center md:justify-end flex-grow min-w-min gap-x-5 sm:gap-x-10"
       >
         <form
           id="search-bar"
@@ -41,6 +37,33 @@
         </button>
       </div>
     </nav>
+
+    <main class="flex-grow md:grid grid-cols-6 gap-4 bg-black">
+      <section
+        id="current-condition"
+        class="p-4 col-span-2 row-start-2 row-span-2 bg-zinc-50 dark:bg-slate-700 dark:text-slate-50"
+      >
+        <h3 class="weather-condition-text text-xl"></h3>
+        <h1 class="location-text text-3xl mt-2"></h1>
+        <div class="my-4 flex">
+          <div class="flex items-center pr-6 mr-6 border-r-2 border-r-black">
+            <p class="temperature-text text-5xl relative"></p>
+          </div>
+          <div>
+            <p class="wind-text"></p>
+            <p class="humidity-text"></p>
+            <p class="cloud-cover-text"></p>
+            <p class="visibility-text"></p>
+          </div>
+        </div>
+        <time
+          class="clock p-1 text-lg bg-lime-200 text-red-950 dark:bg-stone-950 dark:text-lime-400"
+        ></time>
+      </section>
+      <section id="hourly-conditions" class="col-end-7 col-span-3"></section>
+      <img src="./assets/earth.png" alt="" class="col-start-3 col-span-2" />
+      <section id="forecasts" class="col-end-7 col-span-2"></section>
+    </main>
     <script src="main.js"></script>
   </body>
 </html>
