@@ -24,8 +24,8 @@
         >
           <input
             type="search"
-            placeholder="Type in a place"
-            title="Type in a place"
+            placeholder="Type in a city"
+            title="Search for a city"
             class="bg-inherit flex-grow"
           />
           <button type="submit" title="Search">
@@ -38,10 +38,10 @@
       </div>
     </nav>
 
-    <main class="flex-grow md:grid grid-cols-6 gap-4 bg-black">
+    <main class="flex-grow md:grid grid-cols-6 bg-black">
       <section
         id="current-condition"
-        class="p-4 col-span-2 row-start-2 row-span-2 bg-zinc-50 dark:bg-slate-700 dark:text-slate-50"
+        class="p-4 col-span-2 row-start-2 row-span-3 bg-zinc-50 dark:bg-slate-700 dark:text-slate-50"
       >
         <h3 class="weather-condition-text text-xl"></h3>
         <h1 class="location-text text-3xl mt-2"></h1>
@@ -60,9 +60,26 @@
           class="clock p-1 text-lg bg-lime-200 text-red-950 dark:bg-stone-950 dark:text-lime-400"
         ></time>
       </section>
-      <section id="hourly-conditions" class="col-end-7 col-span-3"></section>
-      <img src="./assets/earth.png" alt="" class="col-start-3 col-span-2" />
-      <section id="forecasts" class="col-end-7 col-span-2"></section>
+      <img
+        src="./assets/earth.png"
+        alt=""
+        class="row-start-3 row-span-2 col-start-3 col-span-2"
+      />
+      <section
+        id="hourly-conditions"
+        class="row-start-1 row-span-2 col-end-7 col-span-3 bg-gray-500"
+      ></section>
+      <section
+        id="forecasts"
+        class="row-start-4 col-end-7 col-span-2 bg-gray-200"
+      ></section>
+      <footer class="col-span-6 h-full max-h-60">
+        <img
+          src="./assets/moon-surface.jpg"
+          alt=""
+          class="max-h-full w-screen object-top object-cover"
+        />
+      </footer>
     </main>
     <script src="main.js"></script>
   </body>
