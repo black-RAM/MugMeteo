@@ -43,7 +43,7 @@
         id="current-condition"
         class="p-4 col-span-2 row-start-2 row-span-3 bg-zinc-50 dark:bg-slate-700 dark:text-slate-50"
       >
-        <h3 class="weather-condition-text text-xl"></h3>
+        <h2 class="weather-condition-text text-xl"></h2>
         <h1 class="location-text text-3xl mt-2"></h1>
         <div class="my-4 flex">
           <div class="flex items-center pr-6 mr-6 border-r-2 border-r-black">
@@ -71,8 +71,22 @@
       ></section>
       <section
         id="forecasts"
-        class="row-start-4 col-end-7 col-span-2 bg-gray-200"
-      ></section>
+        class="md:max-h-96 overflow-y-scroll pr-8 row-start-4 col-end-7 col-span-2 bg-stone-200"
+      >
+        <h2 class="text-2xl text-center p-3">Weekly Forecast</h2>
+        <table class="w-full">
+          <thead class="cursor-default">
+            <tr>
+              <th title="Day of the week">Day</th>
+              <th></th>
+              <th title="Temperature">Temp.</th>
+              <th title="Humidity">Humid.</th>
+              <th title="Chance of rain">COR</th>
+            </tr>
+          </thead>
+          <tbody id="forecast-table" class="text-center"></tbody>
+        </table>
+      </section>
       <footer class="col-span-6 h-full max-h-60">
         <img
           src="./assets/moon-surface.jpg"
