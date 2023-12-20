@@ -44,6 +44,15 @@ function formatLocaleTime(epoch: number, timeZone: string): string {
   return formattedTime;
 }
 
+function getDayName(dateString: string) {
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  
+  const date = new Date(dateString);
+  const dayIndex = date.getDay();
+  
+  return daysOfWeek[dayIndex];
+}
+
 function display(data: WeatherApiResponse) {
   console.dir(data)
 
@@ -68,6 +77,34 @@ function display(data: WeatherApiResponse) {
   visibilityText.innerText = `Visibility: ${data.current.vis_km}km`
   clock.dateTime = data.location.localtime
   clock.innerText = formatLocaleTime(data.location.localtime_epoch, data.location.tz_id)
+
+  // displaying forecast table
+  const tableBody = document.querySelector<HTMLTableSectionElement>("tbody#forecast-table")
+  
+  if(!tableBody) return
+
+  for (const dayForecast of data.forecast.forecastday) {
+    const row = document.createElement("tr"),
+      dayCell = document.createElement("td"),
+      iconCell = document.createElement("td"),
+      tempCell = document.createElement("td"),
+      humidCell = document.createElement("td"),
+      rainCell = document.createElement("td");
+
+    dayCell.innerText = getDayName(dayForecast.date)
+    iconCell.innerHTML = `<img src=${dayForecast.day.condition.icon} alt=${dayForecast.day.condition.text}>`
+    tempCell.innerText = `${dayForecast.day.avgtemp_c}C`
+    humidCell.innerText = `${dayForecast.day.avghumidity}%`
+    rainCell.innerText = `${dayForecast.day.daily_chance_of_rain}%`
+
+    row.appendChild(dayCell)
+    row.appendChild(iconCell)
+    row.appendChild(tempCell)
+    row.appendChild(humidCell)
+    row.appendChild(rainCell)
+
+    tableBody.appendChild(row)
+  }
 }
 
 setUpSearchBar()

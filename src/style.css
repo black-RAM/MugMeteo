@@ -1,18 +1,20 @@
-/* tailwind imports */
+/* icons imported first */
+@import "bootstrap-icons/font/bootstrap-icons.css";
+/* Tailwind imported later for precedence with @apply */
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-/* Icons */
-@import "bootstrap-icons/font/bootstrap-icons.css";
 
 main {
   grid-template-rows: 10vh 10vh 60px max-content 1fr;
 }
 
 .temperature-text::after {
-  position: absolute;
-  top: 0px;
-  right: -15px;
+  @apply absolute top-0 -right-4 text-xs;
   content: '\00B0 C';
-  font-size: 1rem;
+}
+
+#forecast-table td {
+  @apply border-t border-t-zinc-500;
+  width: 25%;
 }
