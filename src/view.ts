@@ -1,5 +1,5 @@
 
-import { getWeather } from "./requestors"
+import { WeatherApiResponse, getWeather } from "./requestors"
 import "./style.css"
 
 function setUpSearchBar() {
@@ -34,17 +34,43 @@ function darkModeToggle() {
     })
 }
 
-function parse(weatherData: object) {
-  const parsedData = weatherData
+function formatLocaleTime(epoch: number, timeZone: string): string {
+  const epochMilliseconds = epoch * 1000;
+  const date = new Date(epochMilliseconds);
 
-  display(parsedData)
+  const options: Intl.DateTimeFormatOptions = { timeZone, hour: '2-digit', minute: '2-digit' };
+  const formattedTime = date.toLocaleTimeString('en-US', options);
+
+  return formattedTime;
 }
 
-function display(info: object) {
-  console.dir(info)
+function display(data: WeatherApiResponse) {
+  console.dir(data)
+
+  // displaying current data
+  const currentConditionText = document.querySelector<HTMLHeadingElement>(".weather-condition-text"),
+    locationText = document.querySelector<HTMLHeadingElement>(".location-text"),
+    temperatureText = document.querySelector<HTMLParagraphElement>(".temperature-text"),
+    windText = document.querySelector<HTMLParagraphElement>(".wind-text"),
+    humidityText = document.querySelector<HTMLParagraphElement>(".humidity-text"),
+    cloudCoverText = document.querySelector<HTMLParagraphElement>(".cloud-cover-text"),
+    visibilityText = document.querySelector<HTMLParagraphElement>(".visibility-text"),
+    clock = document.querySelector<HTMLTimeElement>(".clock")
+
+  if(!(currentConditionText && locationText && temperatureText && windText && humidityText && cloudCoverText && visibilityText && clock)) return;
+
+  currentConditionText.innerText = data.current.condition.text
+  locationText.innerText = `${data.location.name}, ${data.location.country}`
+  temperatureText.innerText = data.current.temp_c.toString()
+  windText.innerText = `Wind: ${data.current.wind_kph}km/h`
+  humidityText.innerText = `Humidity: ${data.current.humidity}%`
+  cloudCoverText.innerText = `Cloud Cover: ${data.current.cloud}%`
+  visibilityText.innerText = `Visibility: ${data.current.vis_km}km`
+  clock.dateTime = data.location.localtime
+  clock.innerText = formatLocaleTime(data.location.localtime_epoch, data.location.tz_id)
 }
 
 setUpSearchBar()
 darkModeToggle()
 
-export default parse
+export default display
