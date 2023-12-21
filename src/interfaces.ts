@@ -50,4 +50,37 @@ interface Condition {
   }
 }
 
-export { WeatherApiResponse, WeatherForecastResponse }
+// renaming to display labels on graph
+function parse(hourlyData: HourlyForecast[]) {
+  const output: ProcessedHourlyForecast[] = []
+
+  for (const h of hourlyData) {
+    // only "processing" is date string shortened to 24-hour
+    const result = (() => {
+      return {
+        "hour": h.time.slice(-5),
+        "temperature_c": h.temp_c,
+        "wind_kph": h.wind_kph,
+        "humidity": h.humidity,
+        "cloud_cover": h.humidity,
+        "rain_mm": h.precip_mm,
+        "uv_index": h.uv,
+      }  
+    })();
+    output.push(result)
+  }
+
+  return output
+}
+
+interface ProcessedHourlyForecast {
+  hour: string;
+  temperature_c: number;
+  wind_kph: number;
+  humidity: number;
+  cloud_cover: number;
+  rain_mm: number;
+  uv_index: number;
+}
+
+export { WeatherApiResponse, WeatherForecastResponse, HourlyForecast, parse }

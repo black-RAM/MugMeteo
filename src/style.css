@@ -6,7 +6,7 @@
 @import 'tailwindcss/utilities';
 
 main {
-  grid-template-rows: 10vh 10vh 60px min-content 8vw 1fr;
+  grid-template-rows: min-content 10vh 60px min-content 8vw 1fr;
 }
 
 .temperature-text::after {
@@ -15,6 +15,9 @@ main {
 }
 
 #forecast-table td {
-  @apply border-t border-t-zinc-500;
-  width: 25%;
+  @apply border-t border-t-zinc-500 w-[25%];
+}
+
+#forecast-table button {
+  @apply p-1 bg-blue-200 dark:bg-pink-800;
 }

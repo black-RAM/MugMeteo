@@ -1,4 +1,5 @@
 import { WeatherApiResponse, WeatherForecastResponse } from "./interfaces";
+import plotHourlyForecastData from "./visualiser"
 import getForecast from "./requestors"
 import "./style.css"
 
@@ -88,18 +89,24 @@ function displayForecast(data: WeatherForecastResponse) {
   // display data for each day
   for (const dayForecast of data.forecast.forecastday) {
     const row = document.createElement("tr"),
+      dayBtn = document.createElement("button"),
       dayCell = document.createElement("td"),
       iconCell = document.createElement("td"),
       tempCell = document.createElement("td"),
       humidCell = document.createElement("td"),
       rainCell = document.createElement("td");
 
-    dayCell.innerText = getDayName(dayForecast.date)
+    dayBtn.innerText = getDayName(dayForecast.date)
     iconCell.innerHTML = `<img src=${dayForecast.day.condition.icon} alt=${dayForecast.day.condition.text}>`
     tempCell.innerText = `${dayForecast.day.avgtemp_c}C`
     humidCell.innerText = `${dayForecast.day.avghumidity}%`
     rainCell.innerText = `${dayForecast.day.daily_chance_of_rain}%`
 
+    dayBtn.addEventListener("click", () => {
+      plotHourlyForecastData(dayForecast.hour)
+    })
+
+    dayCell.appendChild(dayBtn)
     row.appendChild(dayCell)
     row.appendChild(iconCell)
     row.appendChild(tempCell)
