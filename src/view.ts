@@ -1,6 +1,5 @@
-
 import { WeatherApiResponse, WeatherForecastResponse } from "./interfaces";
-import { getForecast } from "./requestors"
+import getForecast from "./requestors"
 import "./style.css"
 
 function setUpSearchBar() {

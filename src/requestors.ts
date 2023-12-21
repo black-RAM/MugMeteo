@@ -44,4 +44,6 @@ async function updateCurrent(area: string) {
   }  
 }
 
-export {getUserIP, getForecast }
+getUserIP().then(ip => getForecast(ip || "London"))
+
+export default getForecast

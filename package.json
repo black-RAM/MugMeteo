@@ -21,6 +21,8 @@
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
-    "bootstrap-icons": "^1.11.2"
+    "@observablehq/plot": "^0.6.13",
+    "bootstrap-icons": "^1.11.2",
+    "d3": "^7.8.5"
   }
 }
