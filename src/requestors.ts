@@ -29,6 +29,7 @@ async function getForecast(area: string) {
 
 async function updateCurrent(area: string) {
   try {
+    console.info('updating current weather data...')
     const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=6cbf53650ce94daf8e3154314231712&q=${area}`)
     const data: WeatherApiResponse = await response.json()
     displayCurrent(data)

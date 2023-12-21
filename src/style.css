@@ -6,7 +6,7 @@
 @import 'tailwindcss/utilities';
 
 main {
-  grid-template-rows: 10vh 10vh 60px max-content 1fr;
+  grid-template-rows: 10vh 10vh 60px min-content 8vw 1fr;
 }
 
 .temperature-text::after {
