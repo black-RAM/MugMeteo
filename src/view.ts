@@ -1,5 +1,6 @@
 
-import { WeatherApiResponse, WeatherForecastResponse, getForecast } from "./requestors"
+import { WeatherApiResponse, WeatherForecastResponse } from "./interfaces";
+import { getForecast } from "./requestors"
 import "./style.css"
 
 function setUpSearchBar() {
@@ -79,11 +80,13 @@ function displayCurrent(data: WeatherApiResponse) {
 function displayForecast(data: WeatherForecastResponse) {
   displayCurrent(data)
 
-  // displaying forecast table
   const tableBody = document.querySelector<HTMLTableSectionElement>("tbody#forecast-table")
   
   if(!tableBody) return
 
+  tableBody.innerHTML = "" // clear
+  
+  // display data for each day
   for (const dayForecast of data.forecast.forecastday) {
     const row = document.createElement("tr"),
       dayCell = document.createElement("td"),
