@@ -1,3 +1,3 @@
-import { getUserIP, getWeather } from "./requestors"
+import { getUserIP, getForecast } from "./requestors"
 
-getUserIP().then(ip => getWeather(ip || "London"))
+getUserIP().then(ip => getForecast(ip || "London"))

@@ -1,5 +1,5 @@
 
-import { WeatherApiResponse, getWeather } from "./requestors"
+import { WeatherApiResponse, WeatherForecastResponse, getForecast } from "./requestors"
 import "./style.css"
 
 function setUpSearchBar() {
@@ -9,7 +9,7 @@ function setUpSearchBar() {
   if(searchBar && searchInput) {
     searchBar.addEventListener("submit", function(event) {
       event.preventDefault()
-      getWeather(searchInput.value)
+      getForecast(searchInput.value)
     })
   }
 }
@@ -53,10 +53,7 @@ function getDayName(dateString: string) {
   return daysOfWeek[dayIndex];
 }
 
-function display(data: WeatherApiResponse) {
-  console.dir(data)
-
-  // displaying current data
+function displayCurrent(data: WeatherApiResponse) {
   const currentConditionText = document.querySelector<HTMLHeadingElement>(".weather-condition-text"),
     locationText = document.querySelector<HTMLHeadingElement>(".location-text"),
     temperatureText = document.querySelector<HTMLParagraphElement>(".temperature-text"),
@@ -77,6 +74,10 @@ function display(data: WeatherApiResponse) {
   visibilityText.innerText = `Visibility: ${data.current.vis_km}km`
   clock.dateTime = data.location.localtime
   clock.innerText = formatLocaleTime(data.location.localtime_epoch, data.location.tz_id)
+}
+
+function displayForecast(data: WeatherForecastResponse) {
+  displayCurrent(data)
 
   // displaying forecast table
   const tableBody = document.querySelector<HTMLTableSectionElement>("tbody#forecast-table")
@@ -110,4 +111,4 @@ function display(data: WeatherApiResponse) {
 setUpSearchBar()
 darkModeToggle()
 
-export default display
+export { displayForecast, displayCurrent }
