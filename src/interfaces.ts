@@ -50,4 +50,4 @@ interface Condition {
   }
 }
 
-export { WeatherApiResponse, WeatherForecastResponse, HourlyForecast }
+export { WeatherApiResponse, WeatherForecastResponse, DailyForecast }

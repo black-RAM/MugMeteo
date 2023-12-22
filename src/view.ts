@@ -1,5 +1,6 @@
 import { WeatherApiResponse, WeatherForecastResponse } from "./interfaces";
-import plotHourlyForecastData from "./visualiser"
+import { get24HourTime, getDayName } from "./dateProcessors";
+import selectionManager from "./visualiser"
 import getForecast from "./requestors"
 import "./style.css"
 
@@ -11,6 +12,7 @@ function setUpSearchBar() {
     searchBar.addEventListener("submit", function(event) {
       event.preventDefault()
       getForecast(searchInput.value)
+      selectionManager.refresh()
     })
   }
 }
@@ -35,25 +37,6 @@ function darkModeToggle() {
     })
 }
 
-function formatLocaleTime(epoch: number, timeZone: string): string {
-  const epochMilliseconds = epoch * 1000;
-  const date = new Date(epochMilliseconds);
-
-  const options: Intl.DateTimeFormatOptions = { timeZone, hour: '2-digit', minute: '2-digit' };
-  const formattedTime = date.toLocaleTimeString('en-US', options);
-
-  return formattedTime;
-}
-
-function getDayName(dateString: string) {
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  
-  const date = new Date(dateString);
-  const dayIndex = date.getDay();
-  
-  return daysOfWeek[dayIndex];
-}
-
 function displayCurrent(data: WeatherApiResponse) {
   const currentConditionText = document.querySelector<HTMLHeadingElement>(".weather-condition-text"),
     locationText = document.querySelector<HTMLHeadingElement>(".location-text"),
@@ -74,7 +57,7 @@ function displayCurrent(data: WeatherApiResponse) {
   cloudCoverText.innerText = `Cloud Cover: ${data.current.cloud}%`
   visibilityText.innerText = `Visibility: ${data.current.vis_km}km`
   clock.dateTime = data.location.localtime
-  clock.innerText = formatLocaleTime(data.location.localtime_epoch, data.location.tz_id)
+  clock.innerText = get24HourTime(data.location.localtime_epoch, data.location.tz_id)
 }
 
 function displayForecast(data: WeatherForecastResponse) {
@@ -87,6 +70,7 @@ function displayForecast(data: WeatherForecastResponse) {
   tableBody.innerHTML = "" // clear
   
   // display data for each day
+  let firstIteration = true
   for (const dayForecast of data.forecast.forecastday) {
     const row = document.createElement("tr"),
       dayBtn = document.createElement("button"),
@@ -102,8 +86,19 @@ function displayForecast(data: WeatherForecastResponse) {
     humidCell.innerText = `${dayForecast.day.avghumidity}%`
     rainCell.innerText = `${dayForecast.day.daily_chance_of_rain}%`
 
+    let isSelected = false
     dayBtn.addEventListener("click", () => {
-      plotHourlyForecastData(dayForecast.hour)
+      isSelected = !isSelected
+
+      if(isSelected) {
+        selectionManager.add(dayForecast)
+        dayBtn.classList.add("selected")
+      } else {
+        const wasRemoved = selectionManager.remove(dayForecast)
+        if(wasRemoved) {
+          dayBtn.classList.remove("selected")
+        }
+      }
     })
 
     dayCell.appendChild(dayBtn)
@@ -114,9 +109,12 @@ function displayForecast(data: WeatherForecastResponse) {
     row.appendChild(rainCell)
 
     tableBody.appendChild(row)
-  }
 
-  plotHourlyForecastData(data.forecast.forecastday[0].hour)
+    if(firstIteration) {
+      firstIteration = false
+      dayBtn.click()
+    }
+  }
 }
 
 setUpSearchBar()

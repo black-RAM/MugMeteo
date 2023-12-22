@@ -19,10 +19,14 @@ main {
 }
 
 #forecast-table button {
-  @apply p-1 bg-blue-200 dark:bg-pink-800;
+  @apply p-1 bg-blue-200 dark:bg-pink-600;
 }
 
-#hourly-forecast svg {
+#forecast-table button.selected {
+  @apply bg-blue-400 dark:bg-pink-900
+}
+
+#hourly-forecast .graph {
   @apply font-mono my-4 flex-grow min-w-[500px] dark:fill-neutral-100
 }
 

@@ -1,7 +1,12 @@
-import { HourlyForecast } from "./interfaces";
+import { getDayName } from "./dateProcessors";
+import { DailyForecast } from "./interfaces";
 import * as Plot from "@observablehq/plot";
 
-function createTabs(dataPoints: HourlyForecast[]) {
+// for continuity when graphs change
+let currentTitle = "Temperature (°C)"
+let currentVariable = "temp_c"
+
+function createTabs(dataPoints: DailyForecast[]) {
   const tabList = document.createElement("ul")
   const tabData = {
     "Temperature (°C)": "temp_c",
@@ -18,7 +23,10 @@ function createTabs(dataPoints: HourlyForecast[]) {
     tab.title = title
 
     tab.addEventListener("click", () => {
-      draw(dataPoints, title, variable)
+      currentTitle = title
+      currentVariable = variable
+
+      draw(dataPoints)
     })
     tabList.appendChild(tab)
   }
@@ -30,22 +38,32 @@ function createTabs(dataPoints: HourlyForecast[]) {
   return tabList
 }
 
-function draw(day: HourlyForecast[], title = "Temperature (°C)", variable = "temp_c") {
+function draw(days: DailyForecast[]) {
   const flipChart = document.getElementById("hourly-forecast")
-  const tabs = createTabs(day)
+  const tabs = createTabs(days)
 
   const graph = Plot.plot({
+    className: "graph",
     height: 200,
     marginBottom: 40,
     grid: true,
+    color: {
+      legend: true
+    },
     marks: [
-      Plot.lineY(day, {x: (d) => d["time"].slice(11, 13), y: variable})
+      days.map(
+        day => Plot.lineY(day.hour, {
+          stroke: (d) => getDayName(day.date),
+          x: (d) => d["time"].slice(11, 13),
+          y: currentVariable,
+        })
+      ),
     ],
     x: {
       label: "Hour",
     },
     y: {
-      label: title,
+      label: currentTitle,
       ticks: 5
     },
   })
@@ -57,4 +75,34 @@ function draw(day: HourlyForecast[], title = "Temperature (°C)", variable = "te
   }
 }
 
-export default draw
+class GraphManager {
+  selections: DailyForecast[]
+
+  constructor() {
+    this.selections = []
+  }
+
+  add(selection: DailyForecast) {
+    this.selections.push(selection)
+    draw(this.selections)
+  }
+
+  remove(selection: DailyForecast) {
+    const isLongEnough = this.selections.length > 1
+
+    if(isLongEnough) {
+      this.selections = this.selections.filter(s => s !== selection)
+      draw(this.selections)
+    }
+
+    return isLongEnough
+  }
+
+  refresh() {
+    this.selections = []
+  }
+}
+
+const graphManager = new GraphManager()
+
+export default graphManager
