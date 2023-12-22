@@ -1,17 +1,15 @@
-import { HourlyForecast, parse } from "./interfaces";
+import { HourlyForecast } from "./interfaces";
 import * as Plot from "@observablehq/plot";
 
 function draw(day: HourlyForecast[]) {
   const flipChart = document.getElementById("hourly-forecast")
 
-  const data = parse(day)
-
   const graph = Plot.plot({
-    width: 3000,
-    height: 750,
+    height: 200,
+    marginBottom: 40,
     grid: true,
     marks: [
-      Plot.lineY(data, {x: "hour", y: "temperature_c"})
+      Plot.lineY(day, {x: (d) => d["time"].slice(11, 13), y: "temp_c"})
     ],
     x: {
       label: "Hour",

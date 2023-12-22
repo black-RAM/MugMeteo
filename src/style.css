@@ -21,3 +21,7 @@ main {
 #forecast-table button {
   @apply p-1 bg-blue-200 dark:bg-pink-800;
 }
+
+#hourly-forecast svg {
+  @apply font-mono min-w-[500px] dark:fill-neutral-100 dark:text-neutral-100
+}

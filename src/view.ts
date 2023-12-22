@@ -115,6 +115,8 @@ function displayForecast(data: WeatherForecastResponse) {
 
     tableBody.appendChild(row)
   }
+
+  plotHourlyForecastData(data.forecast.forecastday[0].hour)
 }
 
 setUpSearchBar()
