@@ -6,7 +6,7 @@
 @import 'tailwindcss/utilities';
 
 main {
-  grid-template-rows: min-content 10vh 60px min-content 8vw 1fr;
+  grid-template-rows: min-content 15vh 60px min-content 8vw 1fr;
 }
 
 .temperature-text::after {
@@ -23,5 +23,13 @@ main {
 }
 
 #hourly-forecast svg {
-  @apply font-mono min-w-[500px] dark:fill-neutral-100 dark:text-neutral-100
+  @apply font-mono my-4 flex-grow min-w-[500px] dark:fill-neutral-100
+}
+
+#hourly-forecast ul {
+  @apply sticky top-0 left-0 right-0 grid grid-cols-6 bg-neutral-200 dark:bg-neutral-600
+}
+
+#hourly-forecast ul li {
+  @apply border border-neutral-600 dark:border-neutral-300 overflow-hidden text-ellipsis break-keep whitespace-nowrap cursor-pointer
 }
