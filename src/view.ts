@@ -37,6 +37,17 @@ function darkModeToggle() {
     })
 }
 
+function showError() {
+  const errorElement = document.getElementById("error-holder")
+
+  if(errorElement) {
+    errorElement.classList.remove("hidden")
+    setTimeout(() => {
+      errorElement.classList.add("hidden")
+    }, 2000);
+  }
+}
+
 function displayCurrent(data: WeatherApiResponse) {
   const currentConditionText = document.querySelector<HTMLHeadingElement>(".weather-condition-text"),
     locationText = document.querySelector<HTMLHeadingElement>(".location-text"),
@@ -120,4 +131,4 @@ function displayForecast(data: WeatherForecastResponse) {
 setUpSearchBar()
 darkModeToggle()
 
-export { displayForecast, displayCurrent }
+export { displayForecast, displayCurrent, showError }

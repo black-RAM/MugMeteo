@@ -1,6 +1,7 @@
 interface WeatherApiResponse{
   location: Location;
   current: Current;
+  error: Error;
 }
 interface Location {
   name: string;
@@ -49,5 +50,8 @@ interface Condition {
     icon: string;
   }
 }
-
+interface Error{
+  code: number;
+  message: string;
+}
 export { WeatherApiResponse, WeatherForecastResponse, DailyForecast }

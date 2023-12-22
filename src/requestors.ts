@@ -1,5 +1,5 @@
 import { WeatherApiResponse, WeatherForecastResponse } from "./interfaces"
-import { displayCurrent, displayForecast } from "./view"
+import { displayCurrent, displayForecast, showError } from "./view"
 
 let updater: NodeJS.Timeout | null = null
 
@@ -22,12 +22,21 @@ async function getForecast(area: string) {
       { 'mode': "cors"}
       )
     const data: WeatherForecastResponse = await response.json()
-    displayForecast(data)
 
-    if (updater) {
-      clearInterval(updater)
+    if(!data.error) {
+      displayForecast(data)
+
+      if (updater) {
+        clearInterval(updater)
+      }
+      updater = setInterval(updateCurrent, 1000*60, area)
+    } else {
+      if(data.error.code == 1006) {
+        showError()
+      } else {
+        console.error("Bad response:\n", data.error)
+      }
     }
-    updater = setInterval(updateCurrent, 1000*60, area)
   } catch(error) {
     console.error('Error fetching forecast data:\n', error)
   }

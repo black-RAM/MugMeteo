@@ -17,21 +17,30 @@
       <div
         class="flex justify-center md:justify-end flex-grow min-w-min gap-x-5 sm:gap-x-10"
       >
-        <form
-          id="search-bar"
-          action="#"
-          class="px-4 py-2 flex-grow max-w-sm flex gap-2 rounded-lg bg-zinc-100 dark:text-slate-900"
-        >
-          <input
-            type="search"
-            placeholder="Type in a city"
-            title="Search for a city"
-            class="bg-inherit flex-grow"
-          />
-          <button type="submit" title="Search">
-            <i class="bi bi-search"></i>
-          </button>
-        </form>
+        <div class="flex-grow max-w-sm relative">
+          <form
+            id="search-bar"
+            action="#"
+            class="px-4 py-2 flex gap-2 rounded-lg bg-zinc-100 dark:text-slate-900 z-10 relative"
+          >
+            <input
+              type="search"
+              placeholder="Type in a city"
+              title="Search for a city"
+              class="bg-inherit flex-grow"
+            />
+            <button type="submit" title="Search">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
+          <aside
+            class="text-center hidden absolute top-5 pt-5 w-full bg-red-400 dark:bg-red-900 rounded-b-lg"
+            id="error-holder"
+          >
+            No matching location found.
+          </aside>
+        </div>
+
         <button type="button" title="toggle light/dark mode" id="toggle">
           <i class="bi bi-sun text-4xl" id="toggle-icon"></i>
         </button>
